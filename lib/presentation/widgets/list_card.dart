@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_reader/config/helper/url_launcher.dart';
-import 'package:qr_reader/domain/models/scan_model.dart';
+import 'package:qr_reader/infrastructure/entities/scan.dart';
 import 'package:qr_reader/presentation/providers/scan_provider.dart';
 
 class ListCard extends StatelessWidget {
@@ -11,7 +11,7 @@ class ListCard extends StatelessWidget {
     required this.color,
   });
 
-  final List<ScandModel> scanList;
+  final List<Scan> scanList;
   final ColorScheme color;
 
   @override
@@ -22,8 +22,7 @@ class ListCard extends StatelessWidget {
         return Dismissible(
           onDismissed: (direction) {
             final scan = scanList[index];
-            Provider.of<ScanProvider>(context, listen: false)
-                .deleteById(scan.id);
+            Provider.of<ScanProvider>(context, listen: false).deleteById(scan);
           },
           background: Container(
             color: Colors.red,
@@ -31,7 +30,7 @@ class ListCard extends StatelessWidget {
           key: UniqueKey(),
           child: ListTile(
             title: Text(scanList[index].valor),
-            subtitle: Text('${scanList[index].id}'),
+            subtitle: Text('${scanList[index].id} - ${scanList[index].tipo}'),
             leading: Icon(
               Icons.home_repair_service,
               color: color.primary,

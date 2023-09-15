@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:qr_reader/domain/datasource/scan_sqflite_datasouce_imp.dart';
-import 'package:qr_reader/domain/models/scan_model.dart';
-import 'package:qr_reader/domain/respositories/scan_respository_imp.dart';
+import 'package:qr_reader/infrastructure/datasources/scan_sqflite_datasouce_imp.dart';
+import 'package:qr_reader/infrastructure/entities/scan.dart';
+import 'package:qr_reader/infrastructure/repositories/scan_respository_imp.dart';
 
 class ScanProvider extends ChangeNotifier {
-  List<ScandModel> scanList = [];
+  List<Scan> scanList = [];
   String tipo = "http";
 
   ScanRepositoryImp repositorio =
       ScanRepositoryImp(dataSource: ScanSQFLiteDatasourceImp());
+
+  ScanProvider() {
+    getByTipo(tipo);
+  }
+
+  /*ScanRepositoryImp repositorio =
+      ScanRepositoryImp(dataSource: ScanIsarDatasourceImp());*/
 
   getAll() async {
     scanList = await repositorio.getAll();
@@ -20,12 +27,12 @@ class ScanProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  getById(int id) async {
-    await repositorio.getById(id);
+  getById(Scan scan) async {
+    await repositorio.getById(scan);
   }
 
   saveScan(String value) async {
-    final scan = ScandModel(valor: value, tipo: tipo);
+    final scan = Scan(valor: value, tipo: tipo);
     await repositorio.saveScan(scan);
     getByTipo(tipo);
   }
@@ -36,7 +43,7 @@ class ScanProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  deleteById(int? id) async {
-    await repositorio.deleteById(id);
+  deleteById(Scan scan) async {
+    await repositorio.deleteById(scan);
   }
 }

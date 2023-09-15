@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_reader/presentation/providers/custon_navigator_bar_provider.dart';
-import 'package:qr_reader/config/bd/sqlite_db.dart';
 import 'package:qr_reader/presentation/providers/scan_provider.dart';
 import 'package:qr_reader/presentation/widgets/button_scanner.dart';
 import 'package:qr_reader/presentation/widgets/custom_navegation_bar.dart';
@@ -45,8 +44,6 @@ class _HomeBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final customNavegatorProvider = context.watch<CustomNavedatorBarProvider>();
     final scanProvider = context.read<ScanProvider>();
-
-    DBProvider.db.database;
 
     switch (customNavegatorProvider.currentIndex) {
       case 0:
